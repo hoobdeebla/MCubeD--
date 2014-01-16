@@ -1,0 +1,11 @@
+{
+  "name": "MCubeD",
+  "description": "Basic meme maker thats still in the works, a fun side project really.",
+  "author": "Matthew Martori <matthew.martori@gmail.com>",
+  "dependencies": {
+    "express": ">= 3.3.1",
+    "canvas": ">= 1.0.3",
+		"socket.io": ">= 0.9.16"
+  },
+  "engine": "node 0.10.2"
+}
