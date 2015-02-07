@@ -1,6 +1,7 @@
 {
   "name": "MCubeD",
   "description": "Basic meme maker thats still in the works, a fun side project really.",
+  "repository": "https://github.com/matttt/MCubeD.git",
   "author": "Matthew Martori <matthew.martori@gmail.com>",
   "dependencies": {
     "express": "^3.19.2",
