@@ -1,47 +1,50 @@
 $(document).ready(function () {
   var socket = io.connect();
 
-  $('#makememe').click(function () {
-    var fileinput = document.getElementById('userIMG');
-    if ($('#toptext').val() && $('#bottext').val() && fileinput.files.length !== 0) {
-      var f = fileinput.files[0];
-      var reader = new FileReader();
+  $('#makeMeme').click(function () {
+    var fileInput = document.getElementById('userIMG');
+    if ($('#topText').val() && $('#botText').val() && fileInput.files.length !== 0) {
+      var fontSize = '';
+      if ($('#fontSize').val() === '') {
+        fontSize = 'auto';
+      } else {
+        fontSize = $('#fontSize').val();
+      }
+      var f         = fileInput.files[0];
+      var reader    = new FileReader();
       reader.onload = function (e) {
-        socket.emit('upload', {
+        var options = {
           base64:          e.target.result,
-          filename:        f.name,
-          toptext:         $('#toptext').val(),
-          bottext:         $('#bottext').val(),
-          fontcolor:       $('#fontcolor').val(),
-          fontbordercolor: $('#fontbordercolor').val(),
-          fontsize:        $('#fontsize').val()
-        });
+          fileName:        f.name,
+          topText:         $('#topText').val(),
+          botText:         $('#botText').val(),
+          fontColor:       $('#fontColor').val(),
+          fontBorderColor: $('#fontBorderColor').val(),
+          fontSize:        fontSize
+        };
+        socket.emit('upload', options);
       };
       reader.readAsDataURL(f);
     }
 
     socket.on('uploadedPicInfo', function (data) {
       setTimeout(function () {
-        $('#memeviewer').html('<img id="tempic" src="/images/outputPics/' + data.filename + '">');
-
-        $('#tempic').attr('class', 'centerer img-polaroid');
+        $('#tempic').attr('src', '/images/outputPics/' + data.fileName);
       }, 1000);
     });
   });
 
   document.getElementById('userIMG').onchange = function () {
     var fileinput = document.getElementById('userIMG');
-    var f = fileinput.files[0];
-
-    var reader = new FileReader();
+    var f         = fileinput.files[0];
+    var reader    = new FileReader();
     reader.onload = function (e) {
-      $('#memeviewer').html('<img id="tempic" src="' + e.target.result + '">');
-      $('#tempic').attr('class', 'centerer img-polaroid');
+      $('#tempic').attr('src', e.target.result);
     };
     reader.readAsDataURL(f);
   };
 
   socket.on('nopost', function () {
-    alert('You can only post once every 30 seconds. sorry! this is to prevent malevolent button mashers :)');
+    alert('You can only post once every 30 seconds. Sorry! This is to prevent malevolent button mashers :)');
   });
 });

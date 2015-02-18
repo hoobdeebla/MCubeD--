@@ -1,22 +1,22 @@
-module.exports.wrapText = function (canvas, ctx, text, x, y, maxWidth, lineHeight, fontcolor, fontbordercolor, fontsize, tob, callback) {
+function wrapText (canvas, ctx, text, x, y, maxWidth, lineHeight, fontColor, fontBorderColor, fontSize, top, callback) {
   var words = text.split(' ');
   var line  = '';
-  var fontSize;
+
 
   var i = 0;
 
-  if (fontsize === 'auto') {
+  if (fontSize === 'auto') {
     fontSize = -(text.length) + 74;
   } else {
-    fontSize = Number(fontsize);
+    fontSize = Number(fontSize);
   }
 
-  ctx.fillStyle   = fontcolor || 'white';
-  ctx.strokeStyle = fontbordercolor || 'black';
+  ctx.fillStyle   = fontColor || 'white';
+  ctx.strokeStyle = fontBorderColor || 'black';
   ctx.textAlign   = 'center';
   ctx.font        = (fontSize).toString() + 'pt impact';
   ctx.lineWidth   = fontSize / 25;
-  if (tob === false) {
+  if (top === false) {
     ctx.lineWidth = fontSize / 20;
   }
 
@@ -41,3 +41,7 @@ module.exports.wrapText = function (canvas, ctx, text, x, y, maxWidth, lineHeigh
 
   if (typeof(callback) === 'function') {callback(i);}
 };
+
+module.exports = {
+  wrapText: wrapText
+}
